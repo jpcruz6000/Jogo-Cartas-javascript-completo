@@ -1,0 +1,271 @@
+ <!DOCTYPE HTML>
+ <html lang="pt-BR">
+ <head>
+	<meta charset="UTF-8">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<title>Jogo de Cartas</title>
+</head>
+<style>
+@font-face {
+	font-family: 'RobotoMono';
+}
+
+*{
+	font-family: 'RobotoMono', monospace;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  background-color: black;
+  padding: 0;
+  margin: 0;
+}
+
+#container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: center; 
+  width: 960px;	
+  height: 100vh;
+  color: #FFF;
+  background-color: green;
+  padding: 0;
+  margin: 0;		
+}
+
+#carta {
+  position: absolute;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  background-color: #f0f0f0;  
+  border-radius: 15px;
+  border: 1px solid #b4b4b4; 
+  width: 200px;
+  height: 320px;  
+}
+
+#carta2 {
+  position: absolute;
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  background-color: #f0f0f0;  
+  border-radius: 15px;
+  border: 1px solid #b4b4b4; 
+  width: 200px;
+  height: 320px;  
+}
+
+#figura {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  align-content: center;
+  border: 1px solid #787878; 
+  width: 160px;
+  height: 260px; 
+  font-size: 150px;
+  color: #ff0000;
+}
+
+#figura2 {
+  display: flex;
+  justify-content: center; 
+  align-items: center;
+  align-content: center;
+  border: 1px solid #787878; 
+  width: 160px;
+  height: 260px; 
+  font-size: 150px;
+  color: #ff0000;
+}
+
+#naipe {
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start;
+  width: 40px;
+  height: 320px;
+  font-size: 40px;
+  color: #ff0000; 
+}
+
+#naipe2 {
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start;
+  width: 40px;
+  height: 320px;
+  font-size: 40px;
+  color: #ff0000; 
+}
+
+#naipebotton {
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start; 
+  width: 40px;
+  height: 320px;
+  font-size: 40px;
+  color: #ff0000;
+  -moz-transform:rotate(-180deg); /* Firefox */
+  -webkit-transform:rotate(-180deg); /* Webkit */        
+  -ms-transform:rotate(-180deg); /* IE */
+  -o-transform:rotate(-180deg); /* Opera */
+  transform:rotate(-180deg); /* future */  
+}
+
+#naipebotton2 {
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start; 
+  width: 40px;
+  height: 320px;
+  font-size: 40px;
+  color: #ff0000;
+  -moz-transform:rotate(-180deg); /* Firefox */
+  -webkit-transform:rotate(-180deg); /* Webkit */        
+  -ms-transform:rotate(-180deg); /* IE */
+  -o-transform:rotate(-180deg); /* Opera */
+  transform:rotate(-180deg); /* future */  
+}
+</style>
+
+<body>
+
+<div id="container">
+<h1>Click to draw a card!</h1>
+<p id = "msg">Welcome!</p>
+<p id = "msg1">Have a nice game!</p>
+
+<div onclick="myMove()" id="carta2">
+<div id="naipebotton2">&#9884 </div>
+<div id="figura2">&#9884 </div>
+<div id="naipe2">&#9884 </div>
+</div> 
+
+<div onclick="myMove()" id="carta">
+<div id="naipebotton">&#9884 </div>
+<div id="figura">&#9884 </div>
+<div id="naipe">&#9884 </div>
+</div>
+</div>
+
+<script>
+var pontos = 0;
+var derrotas = 0;
+
+function gameOver() {
+    if (pontos >= 7) {
+	  alert("YOU WIN THE MATCH! GAME OVER!");
+	  this.pontos = 0;
+	  this.derrotas = 0;
+    } else if (derrotas >= 7) {
+	  alert("YOU LOSE! GAME OVER!");
+	  this.pontos = 0;
+	  this.derrotas = 0;
+    }
+} 
+
+function myMove() {
+  var elem = document.getElementById("carta");
+  var elem1 = document.getElementById("carta2");
+  var pos = 0;
+  var pos2 = 65;
+  var id = setInterval(frame, 8);
+  var gOver = gameOver();
+  var nFig = newCarta();
+  
+  function frame() {
+    if (pos == 40) {
+      clearInterval(id);
+    } else {
+      pos++; 
+	  pos2--;
+      elem.style.top = pos + "%"; 
+      elem.style.left = pos + "%";
+	  elem1.style.top = pos2 + "%";
+	  elem1.style.left = pos2 + "%";
+    }
+  }
+};
+function newCarta(){
+	var nipes = [' ♥',' ♦',' ♣',' ♠'];
+	var faces = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
+	var cor = ['#ff0000', '#ff0000', '#3c3c3c', '#3c3c3c'];// vermelho,v,preto,p
+	
+	var elem1 = document.getElementById("figura");
+	var elem2 = document.getElementById("naipebotton");
+	var elem3 =  document.getElementById("naipe");
+	
+	var elem12 = document.getElementById("figura2"); // figura cpu
+	var elem22 = document.getElementById("naipebotton2"); //naipebotton cpu
+	var elem32 = document.getElementById("naipe2");
+	
+	this.cartamesa = this.face; //carta da mesa recebe o valor da ultima carta jogada figura
+	this.naipemesa = this.nipe; //carta da mesa recebe o valor da ultima carta jogada naipe
+	
+	this.nipe = Math.floor(Math.random()*4);
+	this.face = Math.floor(Math.random()*faces.length);
+		
+	var placar = document.getElementById("msg");
+	var placar1 = document.getElementById("msg1");
+	if (typeof faces[cartamesa] === "undefined"){ //Previne o jogo de começar com o objeto: atual indefindio
+		placar.innerHTML = "Game Start!";
+		placar1.innerHTML = "CPU 0 X 0 Player";
+	}else{
+		placar1.innerHTML = " Player"+" Total Points:"+pontos+" CPU Points:"+derrotas;		
+		if (cartamesa > face) {
+			placar.innerHTML = "CPU "+faces[cartamesa]+" "+nipes[naipemesa]+" X "+faces[face]+" "+nipes[nipe]+" Your card is weaker! You lost the round!";
+			this.derrotas += 1;
+		} else if (cartamesa == face) {
+			if (naipemesa > nipe){
+				placar.innerHTML = "CPU "+faces[cartamesa]+" "+nipes[naipemesa]+" X "+faces[face]+" "+nipes[nipe]+" Too bad, this card is weaker! You lost this round!";
+				this.derrotas += 1;
+			}else if ( naipemesa == nipe ){
+				placar.innerHTML = "CPU "+faces[cartamesa]+" "+nipes[naipemesa]+" X "+faces[face]+" "+nipes[nipe]+" What a coincidence! Call it a draw!";
+			}else {
+				this.pontos += 1;
+				placar.innerHTML = "CPU "+faces[cartamesa]+" "+nipes[naipemesa]+" X "+faces[face]+" "+nipes[nipe]+" Your card is stronger! You won this round!";
+			}
+		} else {
+			placar.innerHTML = "CPU "+faces[cartamesa]+" "+nipes[naipemesa]+" X "+faces[face]+" "+nipes[nipe]+" Nice One! You won this round!";
+			this.pontos += 1;
+		}
+	}
+	
+	elem12.innerHTML = elem1.innerHTML;
+	elem12.style.fontSize = elem1.style.fontSize;
+	elem12.style.color = elem1.style.color;
+	elem22.innerHTML = elem2.innerHTML;
+	elem22.style.color = elem2.style.color;
+	elem32.innerHTML = elem3.innerHTML;
+	elem32.style.color = elem3.style.color;
+	
+	elem1.style.color = cor[nipe];
+	elem2.style.color = cor[nipe];
+	elem3.style.color = cor[nipe];
+	elem2.innerHTML = faces[face]+nipes[nipe];
+	elem3.innerHTML = faces[face]+nipes[nipe];
+	elem1.innerHTML = nipes[nipe].repeat(face+1);
+	
+	if (face <= 4 ) {
+		elem1.style.fontSize = "80px";	
+	} else if (face >= 5 && face <= 7){
+		elem1.style.fontSize = "60px";	
+	} else if (face >= 8) {
+		elem1.style.fontSize = "40px";
+	} 
+}
+</script>
+</body>
+</html>
+
+
+
+
+
